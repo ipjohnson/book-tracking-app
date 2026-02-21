@@ -45,7 +45,7 @@ class ScanProvider extends ChangeNotifier {
       }
     } catch (e) {
       _state = ScanState.error;
-      _errorMessage = 'Lookup failed. Please try again.';
+      _errorMessage = e.toString();
     }
     notifyListeners();
   }

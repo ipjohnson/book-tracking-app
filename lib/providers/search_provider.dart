@@ -35,7 +35,7 @@ class SearchProvider extends ChangeNotifier {
     try {
       _results = await _service.searchBooks(query);
     } catch (e) {
-      _error = 'Search failed. Please try again.';
+      _error = e.toString();
       _results = [];
     } finally {
       _isLoading = false;
