@@ -13,7 +13,15 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Book Tracker')),
+      appBar: AppBar(
+        title: const Text('Book Tracker'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () => context.push('/settings'),
+          ),
+        ],
+      ),
       body: Consumer<BookProvider>(
         builder: (context, provider, _) {
           final reading = provider.readingBooks;

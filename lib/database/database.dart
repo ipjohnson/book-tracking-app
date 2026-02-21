@@ -20,10 +20,29 @@ class Books extends Table {
   TextColumn get googleBooksId => text().nullable()();
 }
 
-@DriftDatabase(tables: [Books])
+@DataClassName('SettingData')
+class Settings extends Table {
+  TextColumn get key => text()();
+  TextColumn get value => text()();
+
+  @override
+  Set<Column> get primaryKey => {key};
+}
+
+@DriftDatabase(tables: [Books, Settings])
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.e);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        onCreate: (m) => m.createAll(),
+        onUpgrade: (m, from, to) async {
+          if (from < 2) {
+            await m.createTable(settings);
+          }
+        },
+      );
 }

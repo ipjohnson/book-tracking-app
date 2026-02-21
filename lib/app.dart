@@ -5,6 +5,7 @@ import 'package:book_tracking_app/screens/search_screen.dart';
 import 'package:book_tracking_app/screens/scan_screen.dart';
 import 'package:book_tracking_app/screens/library_screen.dart';
 import 'package:book_tracking_app/screens/book_detail_screen.dart';
+import 'package:book_tracking_app/screens/settings_screen.dart';
 import 'package:book_tracking_app/widgets/bottom_nav_shell.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -66,6 +67,11 @@ final router = GoRouter(
       builder: (context, state) {
         return const BookDetailScreen();
       },
+    ),
+    GoRoute(
+      path: '/settings',
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) => const SettingsScreen(),
     ),
   ],
 );

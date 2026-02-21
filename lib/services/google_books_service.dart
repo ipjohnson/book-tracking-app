@@ -5,13 +5,14 @@ import 'package:book_tracking_app/models/book.dart';
 class GoogleBooksService {
   static const _baseUrl = 'https://www.googleapis.com/books/v1/volumes';
 
-  final String? apiKey;
+  String? Function() apiKeyGetter;
 
-  GoogleBooksService({this.apiKey});
+  GoogleBooksService({required this.apiKeyGetter});
 
   String _buildUrl(String params) {
-    final key = apiKey != null ? '&key=$apiKey' : '';
-    return '$_baseUrl?$params$key';
+    final key = apiKeyGetter();
+    final keyParam = key != null ? '&key=$key' : '';
+    return '$_baseUrl?$params$keyParam';
   }
 
   Future<List<Book>> searchBooks(String query) async {
@@ -59,7 +60,7 @@ class HttpException implements Exception {
   @override
   String toString() {
     if (statusCode == 429) {
-      return 'API rate limit exceeded. Try again later.';
+      return 'API rate limit exceeded. Add an API key in Settings.';
     }
     return 'API error ($statusCode)';
   }
